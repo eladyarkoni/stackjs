@@ -1,0 +1,90 @@
+.project-tree-view {
+	width: 100%;
+	height: 100%;
+	background-color: #272822;
+	padding: 10px;
+	color: #a6e22e;
+}
+
+.project-tree-view > .project-tree-item {
+	padding: 0;
+}
+
+.project-tree-item {
+	list-style-type: none;
+}
+
+.project-tree-item li {
+	padding-left: 2px; 
+	text-indent: 2px;
+	margin-top: 15px;
+	cursor: pointer;
+	transition: all 0.5s;
+	position: relative;
+}
+
+.project-tree-item .delete {
+	padding-top: 2px;
+	padding-right: 2px;
+	width: 28px;
+	height: 18px;
+	border-radius: 20px;
+	background-color: #a6e22e;
+	color: #272822;
+	position: absolute;
+	left: -25px;
+	top: -2px;
+	display: none;
+	text-align: center;
+	font-weight: bold;
+	opacity: 0;
+	transition: all 1s;
+}
+
+.project-tree-item .delete:hover {
+	opacity: 0.8;
+}
+
+.project-tree-item .delete:active {
+	transition: all 0.1s;
+	box-shadow: inset 1px 1px 10px #000;
+}
+
+.project-tree-item [type="view"] .delete,
+.project-tree-item [type="service"] .delete {
+	display: block;
+}
+
+
+.project-tree-item .header.folder {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.project-tree-item .header.root {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.project-tree-item .header.view {
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.project-tree-item .header.service {
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.project-tree-item li a {
+	padding: 10px;
+}
+
+.project-tree-item li a.selected {
+	background-color: #272822;
+	text-shadow: 1px 1px 30px #fff;
+}
+
+.project-tree-item li:hover .delete {
+	opacity: 0.8;
+}

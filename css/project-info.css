@@ -1,0 +1,37 @@
+.project-info {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 50px;
+	left: 10px;
+	right: 10px;
+	background-color: #272822;
+	border: 1px solid #000;
+	border-radius: 10px;
+	z-index: 999;
+	box-shadow: 1px 1px 20px #000;
+	padding: 50px;
+	transition: all 0.3s;
+	-webkit-transform: translateY(-1000px);
+	font-family: Arial;
+	font-size: 18px;
+	color: #a6e22e;
+}
+
+.project-info.open {
+	-webkit-transform: translateY(0);
+}
+
+.project-info > div {
+	margin-bottom: 10px;
+	text-decoration: underline;
+}
+
+.project-info input,
+.project-info select {
+	border: none;
+	padding: 5px;
+	width: 400px;
+	font-size: 18px;
+	margin-bottom: 20px;
+}

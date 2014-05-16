@@ -1,0 +1,94 @@
+.stack-store-view {
+	position: absolute;
+	height: 100%;
+	background-color: #272822;
+	color: #a6e22e;
+	-webkit-transition: all 0.3s;
+	opacity: 0;
+	margin-top: 50px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.stack-store-view.in {
+	opacity: 1;
+}
+
+.stack-store-view.out {
+	opacity: 0;
+}
+
+.stack-store-view .top-container {
+	width: 100%;
+	height: 130px;
+	background-color: #606158;
+	padding: 20px;
+	box-shadow: 0 1px 15px #000;
+	z-index: 3;
+	position: fixed;
+}
+
+.stack-store-view .top-container h1 {
+	font-size: 72px;
+	color: #fff;
+	text-shadow: 1px 1px 15px #000;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+.stack-store-view .tabbar {
+	background-color: #969989;
+	box-shadow: 0 1px 15px #000;
+	display: inline-block;
+	margin: 0;
+	padding: 15px 0 15px 40px;
+	z-index: 2;
+	top: 170px;
+	left: 0px;
+	right: 0px;
+	position: absolute;
+}
+
+.stack-store-view ul.tabbar > li {
+	list-style-type: none;
+	float: left;
+	margin-right: 80px;
+	cursor: pointer;
+}
+
+.stack-store-view ul.tabbar > li:hover a {
+	text-shadow: 1px 1px 10px #fff;
+}
+
+.stack-store-view ul.tabbar > li a {
+	color: #fff;
+	font-size: 20px;
+	text-shadow: 1px 1px 10px #000;
+	transition: all 0.3s;
+}
+
+.stack-store-view .container {
+	position: absolute;
+	top: 200px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+	padding: 20px;
+}
+
+.stack-store-view .container h1 {
+	font-size: 48px;
+	text-shadow: 1px 1px 20px #000;
+}
+
+.stack-store-view .container .scroller {
+	position: absolute;
+	top: 140px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-y: scroll;
+}

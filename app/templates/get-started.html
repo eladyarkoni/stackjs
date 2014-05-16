@@ -1,0 +1,492 @@
+<div class="get-started">
+	<div class="scroller">
+			<div class="btn" onclick="@close">Close</div>
+			<h1>Get Started</h1>
+			<p>
+				This screen will guide you how to start working with stackJS mobile framework.
+			</p>
+			<p>
+				StackJS mobile framework let you build great mobile applications with javascript.
+				<br>
+				StackJS keeps your application code readable and makes your developement process swift and simple.
+				<br><br>
+				So, enought with the boolshit, lets go and learn stackJS.
+			</p>
+			<h2>1. The Class</h2>
+			<p>
+				Creating a new class in StackJS:
+			</p>
+			<textarea>
+		Class('Human', {
+			
+			name: null,
+			age: null,
+			
+			// Constructor
+			Human: function(name, age) {
+				this.name = name;
+				this.age = age;
+			},
+
+			say_hello: function() {
+				return "Hello, my name is " + this.name + " and I'm " + this.age + " years old";
+			}
+		});
+
+		// Create a new object
+
+		// If you defined a constructor: 
+		var myHuman = new Human('John', 30);
+
+		// If you don't have any constructor, use the stackJS object default constructor:
+		var myHuman = new Human({name: 'John', age: 30});
+
+		myHuman.say_hello();
+			</textarea>
+			<h2>2. Inheritance</h2>
+			<p>
+				You can inherit from another class:
+			</p>
+			<textarea>
+		Class('Kid::Human', {
+			
+			play: function() {
+				return "My name is " + this.name + " and I'm playing!";
+			}
+		});
+
+		// Create an object:
+		var myKid = new Kid({name: 'Danny', age: 10});
+		myKid.play();
+			</textarea>
+			<p>
+				StackJS creates setters and getters automatically for you!
+			</p>
+			<textarea>
+		Class('Student::Human', {
+			
+			title: null,
+			yearsLeft: null
+
+		});
+
+		var student = new Student({name: 'John', age: 30});
+		student.setTitle('Computer science');
+		student.setYearsLeft(2);
+
+		student.getTitle(); // prints 'Computer science'
+			</textarea>
+			<h2>3. Singletons</h2>
+			<p>
+				StackJS class system supports singletons out of the box.
+				<br>
+				When a class is accessed for the first time without the 'new' declaration, a new shared instance is created and from now on, all class calls without the 'new' returns that instance.
+				<br>
+				<textarea>
+		Class('MySingleton', {
+			
+			var1: null,
+			var2: null,
+
+			doSomething: function() {
+				...
+			}
+		});			
+
+		var object1 = MySingleton();
+		var object2 = MySingleton();
+
+		// object1 == object2.
+				</textarea> 
+			</p>
+			<h2>4. The Stack</h2>
+			<p>
+				StackJS manages a call stack programmatically.
+				<br>
+				You can print, save or send the stack during runtime to know exactly the root cause of any user failue without trying to reproduce the issue yourself.
+			</p>
+			<textarea>
+		Class('A', {
+			
+			print: function() {
+				// print the stack to console.log or return the stack calls string;
+				var trace = StackJS.trace();
+				// save trace to server...
+				// ...
+				// ...
+				return 'class A';
+			}
+		});
+
+		Class('B', {
+			
+			printA: function(a) {
+				a.print();
+			}
+		});
+
+		var b = new B();
+		b.printA(new A());
+			</textarea>
+			<h2>5. Object Delegation</h2>
+			<p>
+				Any stackJS object can be a delegate for another object.
+				<br>
+				The object delegation in stackJS is a powerfull feature which gives developers the ability to create complex and self contained modules as 'blackboxes' and define an API for another modules which are used as their delegates.  
+			</p>
+			<textarea>
+		Class('ListView', {
+			
+			print: function() {
+				// call delegate methods (doesn't crash if methods does not exists)
+				// callDelegate([method name], [parameters], [default value])
+				var size = this.callDelegate('listSize', null, 0);
+				for (var i = 0; i &lt; size; i++) {
+					var itemView = {};
+					this.callDelegate('listItemView', [itemView, i]);
+					console.log('item: ' + itemView.view);
+				}
+			}
+
+		});
+
+		// ListView Delegate
+		Class('MyView', {
+			
+			todos: [
+				{label: 'Clean the room', done: false},
+				{label: 'Eat dinner', done: true},
+				{label: 'Go out with the dog', done: false}
+			],
+
+			print: function() {
+				var listView = new ListView();
+				listView.setDelegate(this);
+				listView.print();
+			},
+
+			// Delegation methods
+			listSize: function() {
+				return this.todos.length;
+			},
+
+			listItemView: function(itemView, index) {
+				itemView.view = this.todos[index].label + ": " + this.todos[index].done;
+			}
+		});
+			</textarea>
+			<h1>The Application Framework</h1>
+			<p>
+				The application framework gives you all you need to create great mobile apps.
+			</p>
+			<h2>1. The Application Tree</h2>
+			<p>
+				Each stackJS mobile app includes the next file tree:
+				<ul>
+					<li>
+						<a>Root</a>
+						<ul>
+							<li>
+								<a>app</a>
+								<ul>
+									<li><a>views</a></li>
+									<li><a>templates</a></li>
+									<li><a>models</a></li>
+									<li><a>services</a></li>
+									<li><a>main.js</a></li>
+								</ul>
+							</li>
+							<li><a>assets</a><ul><li><a>images</a></li><li><a>sounds</a></li></ul></li>
+							<li><a>config</a><ul><li><a>config.json</a></li></ul></li>
+							<li><a>css</a></li>
+							<li><a>lib</a><ul><li><a>stackjs.mobile.js</a></li></ul></li>
+							<li><a>index.html</a></li>
+						</ul>
+					</li>
+				</ul>
+			</p>
+			<h2>2. The View</h2>
+			<p>
+				The view object represents a view controller in your app.
+				any view has a template, which represents the html template for the view.
+				<br>
+				The view extends the STView class.
+			</p>
+			<p>Lets create a new view.</p>
+			<textarea>
+		Class('TableView::STView', {
+			
+			template: 'table-view',
+
+			render: function() {
+				// called when the view is rendered
+			}
+
+		});	
+			</textarea>
+			<p>
+				The template property represents the name of the html template for the view.
+				<br>
+				When the class 'TableView' is created, the StackJS engine caches the template file and when the view is initialized, a dom element is generated inside the view.
+			</p>
+			<p>Lets create a template for our table view inside the templates directory with the name: table-view.html</p>
+			<textarea>
+		<div class='table-view'>
+			<h1>Table Title</h1>
+			<div class="content"></div>
+		</div>		
+			</textarea>
+			<h2>3. Outlets</h2>
+			<p>
+				Outlets are used to connect between the template element and the view controller.
+				<br>
+				Lets go back to our example and create an outlet for the table title.
+			</p>
+			<textarea>
+		<div class='table-view'>
+			<h1 outlet="@tableTitleElement">Table Title</h1>
+			<div class="content"></div>
+		</div>
+			</textarea>
+			<p>And a reference inside our view controller:</p>
+			<textarea>
+		Class('TableView::STView', {
+			
+			template: 'table-view',
+
+			tableTitleElement: null,
+
+			render: function() {
+				// called when the view is rendered
+			}
+		});	
+			</textarea>
+			<p>
+				When the view will be rendered, the 'tableTitleElement' property will hold the 'h1' dom element and we will be able to update it.
+			</p>
+				<textarea>
+		Class('TableView::STView', {
+			
+			template: 'table-view',
+
+			tableTitleElement: null,
+
+			render: function() {
+				this.tableTitleElement.innerHTML = 'My First Table';
+			}
+		});	
+			</textarea>
+			<h2>4. Actions</h2>
+			<p>
+				Actions are used to connect between the dom events and the view controller methods.
+				<br>
+				Lets define an action which represents a user click on the table title.
+			</p>
+			<textarea>
+		<div class='table-view'>
+			<h1 outlet="@tableTitleElement" onclick="@onClickTableTitle">Table Title</h1>
+			<div class="content"></div>
+		</div>
+			</textarea>
+			<p>
+				And the method inside out view controller.
+			</p>
+			<textarea>
+		Class('TableView::STView', {
+			
+			template: 'table-view',
+
+			tableTitleElement: null,
+
+			render: function() {
+				this.tableTitleElement.innerHTML = 'My First Table';
+			},
+
+			onClickTableTitle: function(evt) {
+				// called when the user clicks on the table title
+			}
+		});	
+			</textarea>
+			<h2>5. Put it all together</h2>
+			<p>
+				Now, lets create a new view which represents a table view item.
+			</p>
+			<textarea>
+		Class('TableItemView::STView', {
+			
+			template: 'table-item-view',
+			labelElement: null,
+
+			render: function() {
+				this.labelElement = this.model.label;
+			},
+
+			onClickItem: function() {
+				// yes, each table item view holds the table view as its delegate.
+				this.callDelegate('itemIsClicked', [this.model]);
+			}
+		});
+			</textarea>
+			<p>And the template.</p>
+			<textarea>
+		<div class='table-item'>
+			<a outlet="@labelElement" onclick="@onClickItem"></a>
+		</div>		
+			</textarea>
+			<p>Now lets render the table view with items</p>
+			<textarea>
+		Class('TableView::STView', {
+			
+			template: 'table-view',
+
+			tableTitleElement: null,
+
+			render: function() {
+				this.tableTitleElement.innerHTML = 'My First Table';
+				for (var i = 0; i &lt; this.model.items.length; i++) {
+					// add view method to add a view as a subview for another view.
+					// addView([view object], [container selector (optional)]);
+					this.addView(new TableItemView({model: this.model.items[i], delegate: this}), 'div.content');
+				}
+			},
+
+			onClickTableTitle: function(evt) {
+				// called when the user clicks on the table title
+			},
+
+			// table view item delegate method
+			itemIsClicked: function(model) {
+				// do something.
+			}
+		});	
+			</textarea>
+			<h2>6. Application Main</h2>
+			<p>
+				The application main is the main.js file under the app directory.
+				<br>
+				The application main starts the app with your main view.
+			<p>
+			<textarea>
+		(function() {
+			/*
+				run application controller with your main view class: 'ApplicationView'
+			*/
+			return new STApplication({ view: ApplicationView });	
+		})();
+			</textarea>
+			<h2>7. Application Services</h2>
+			<p>
+				The StackJS application framework comes with several services that any application needs.
+			</p>
+			<p><u>STUserSettings</u></p>
+			<p>
+				The STUserSettings holds a map of keys and values which is dedicated for user settings and stored on the file system which means that it's not deleted after the user closes the App. 
+			</p>
+			<textarea>
+		// save key and value
+		App.settings.set([key], [value]);
+
+		// get value of a key
+		var value = App.settings.get([key]);
+			</textarea>
+			<p><u>STNotificationCenter</u></p>
+			<p>
+				The STNotificationCenter is used to post and listen to events over the App.
+			</p>
+			<textarea>
+		Class('LoginView::STView', {
+			
+			loginSuccess: function(user, password) {
+				App.notificationCenter.postNotification('UserLoggedInNotification', { user: user, password: password});
+			}
+		});
+
+		Class('ToolbarView::STView', {
+			
+			userImageEl: null,
+
+			// C'tor
+			ToolbarView: function() {
+				App.notificationCenter.addObserver(this, this.onUserLoggedIn, 'UserLoggedInNotification');
+			},
+			
+			onUserLoggedIn: function(notificationObject) {
+				// update user image on toolbar after login
+				this.userImageEl.src = this.facebookConnect.getUserImageURI(notificationObject.user);
+			}
+		});
+			</textarea>
+			<p><u>STServer</u></p>
+			<p>
+				The STServer represents a server which can be your application server or any other thirdparty server.
+				<br>
+				You can define as many server as you like.
+			</p>
+			<textarea>
+		// Define your application server
+		Class('MyServer::STServer', {
+			
+			// the default domain is the current app domain
+			domain: 'http://[myserver]/[myapp]/rest',
+
+			login: function(user, password, success, error) {
+				this.post('/login/', { user: user, password: password}, {headers...}, success, error);
+			},
+
+			getUser: function(userId, success, error) {
+				this.get('/users/:userId', { userId: userId}, null, success, error);
+			}
+			...
+			...
+		});
+
+		// Access to server
+		MyServer().login('myuser', 'mypassword', function(userObject){
+			// do things after user has logged in...
+		}, null);
+			</textarea>
+			<br>
+			<p><u>STDatabase</u></p>
+			<p>
+				The STDatabase handle WebSql database.
+			</p>
+			<textarea>
+				// Open a new database
+				var myDatabase = new STDatabase({name: 'my-db', version: '1.0', size: 50 * 1024 * 1024});
+				
+				// insert a new row into database to users table
+				myDatabase.save('users', {id: 1, name: 'john', email: 'john@john.com'});
+
+				// select from database
+				myDatabase.get('users', {name: 'john'}, function(items){
+					for (var i = 0; i &lt; items.length; i++) ...
+				});
+			</textarea>
+			<p>Or...</p>
+			<textarea>
+				Class('MyDatabase::STDatabase', {
+					
+					name: 'my-db',
+					version: '1.0',
+					size: 50 * 1024 * 1024,
+
+					getAllUsers: function(callback) {
+						this.get('users', {}, callback); 
+					},
+
+					...
+					...
+				});
+
+				MyDatabase().getAllUsers(function(users){
+					...
+				});
+			</textarea>
+			<br>
+			<p>
+				That's it, you are now ready to create your first app on StackJS IDE.
+			</p>
+			<p align="center" class='clickable' onclick="@close">Close</p>
+			<br><br><br><br><br><br>
+	</div>
+</div>

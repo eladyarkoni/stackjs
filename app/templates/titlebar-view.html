@@ -1,0 +1,70 @@
+<div class="titlebar-view disabled">
+	<ul>
+		<li>
+			<a>Project</a>
+			<ul>
+				<div class="triangle"></div>
+				<li><a onclick="@projectNew">New Project</a></li>
+				<li><a onclick="@projectLoad">Load</a></li>
+				<li><a onclick="@projectSave">Save</a></li>
+				<li><a onclick="@projectDownload">Download</a></li>
+				<li><a onclick="@projectExport">Export Project</a></li>
+				<li><a onclick="@projectImport">Import Project</a></li>
+				<!-- <li><a onclick="@projectAndroidBuild">Build Android Project</a></li> -->
+			</ul>
+		</li>
+		<li>
+			<a>Components</a>
+			<ul>
+				<div class="triangle"></div>
+				<li><a onclick="@projectAddView">New View</a></li>
+				<li><a onclick="@projectAddServer">New Server</a></li>
+				<li><a onclick="@projectAddDatabase">New Database</a></li>
+			</ul>
+		</li>
+		<li>
+			<a>Device</a>
+			<ul>
+				<div class="triangle"></div>
+				<li><a type="iphone4" onclick="@changeDevice">iPhone 4</a></li>
+				<li><a type="iphone5" onclick="@changeDevice">iPhone 5</a></li>
+				<li><a type="galaxy-s3" onclick="@changeDevice">Galaxy S3</a></li>
+			</ul>
+		</li>
+		<li>
+			<a>Run</a>
+			<ul>
+				<div class="triangle"></div>
+				<li><a onclick="@runProject">Run Project</a></li>
+			</ul>
+		</li>
+<!-- 		<li>
+			<a>Stack Store</a>
+			<ul>
+				<div class="triangle"></div>
+				<li><a onclick="@openStackStore" >Stack Store</a></li>
+				<li><a onclick="@publishToStore">Publish to store</a></li>
+			</ul>
+		</li> -->
+		<li>
+			<a>Help</a>
+			<ul>
+				<div class="triangle"></div>
+				<li><a onclick="@getStarted">Get Started</a></li>
+				<li><a onclick="@api">StackJS API</a></li>
+			</ul>
+		</li>
+		<li>
+			<a>About</a>
+			<ul>
+				<div class="triangle"></div>
+				<li><a rel="http://www.eladyarkoni.com" onclick="@openUrl">My Website</a></li>
+				<li><a rel="http://il.linkedin.com/pub/elad-yarkoni/14/609/929" onclick="@openUrl">My Linkedin</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div class="message-box" outlet="@messageBoxEl">
+		<p outlet="@messageEl"></p>
+	</div>
+	<div class="version" outlet="@versionEl"></div>
+</div>

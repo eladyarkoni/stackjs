@@ -1,0 +1,10 @@
+.%viewClassName% {
+	list-style-type: none;
+	border-bottom: 1px solid #000;
+	padding: 20px;
+	margin: 0;
+}
+
+.%viewClassName% a {
+	color: #000;
+}

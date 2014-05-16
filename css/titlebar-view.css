@@ -1,0 +1,104 @@
+.titlebar-view {
+	color: #a6e22e;
+	z-index: 99;
+}
+
+.titlebar-view .message-box {
+	width: 500px;
+	height: 70px;
+	background-color: #272822;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	position: absolute;
+	left: 50%;
+	margin-left: -200px;
+	box-shadow: 1px 1px 10px #000;
+	text-align: center;
+	color: #a6e22e;
+	padding-top: 30px;
+	-webkit-transform: translateY(-100px);
+	transition: all 0.3s;
+}
+
+.titlebar-view .message-box p {
+	opacity: 0;
+	transition: all 0.3s;
+}
+
+.titlebar-view .message-box.open {
+	-webkit-transform: translateY(-30px);
+}
+
+.titlebar-view .message-box.open p {
+	opacity: 1;
+}
+
+.titlebar-view > ul {
+	margin: 0;
+}
+
+.titlebar-view > ul > li {
+	list-style-type: none;
+	float: left;
+	margin: 0;
+	position: relative;
+	margin-right: 40px;
+}
+
+.titlebar-view:not(.disabled) > ul > li {
+	cursor: pointer;
+}
+
+.titlebar-view.disabled a {
+	opacity: 0.5;
+}
+
+.titlebar-view > ul > li > a,
+.titlebar-view > ul > li > ul > li > a {
+	transition: all 0.5s;
+} 
+
+.titlebar-view:not(.disabled) > ul > li:hover > a,
+.titlebar-view:not(.disabled) > ul > li > ul > li:hover > a {
+	text-shadow: 1px 1px 25px #fff;
+}
+
+.titlebar-view:not(.disabled) > ul > li:hover > ul,
+.titlebar-view:not(.disabled) > ul > li:active > ul
+{
+	display: block;
+}
+
+.titlebar-view > ul > li > ul {
+	width: 170px;
+	padding: 20px;
+	position: absolute;
+	z-index: 0;
+	box-shadow: 1px 1px 50px #000;
+	border-radius: 10px;
+	top: 30px;
+	background-color: #272822;
+	display: none;
+}
+
+.titlebar-view > ul > li > ul > .triangle {
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: 0 25px 25px 25px;
+	border-color: transparent transparent #272822 transparent;
+	position: absolute;
+	top: -20px;
+}
+
+.titlebar-view > ul > li > ul > li {
+	list-style-type: none;
+	margin-top: 20px;
+} 
+
+.titlebar-view .version {
+	float: right;
+	margin-right: 50px;
+	font-size: 12px;
+}
+

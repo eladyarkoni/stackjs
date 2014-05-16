@@ -1,0 +1,25 @@
+.publish-view {
+	width: 800px;
+}
+
+.publish-view .image-placeholder {
+	width: 200px;
+	height: 200px;
+	background-color: #BDBDBD;
+	border: 1px double #fff;
+	text-align: center;
+}
+
+.publish-view .image-placeholder .text {
+	color: #424242;
+	font-size: 18px;
+	font-family: Arial;
+	padding-top: 80px;
+	opacity: 0.7;
+	cursor: pointer;
+}
+
+.publish-view .btn {
+	float: right;
+	margin: 10px 0 10px 10px;
+}

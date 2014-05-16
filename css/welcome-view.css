@@ -1,0 +1,83 @@
+.welcome-view {
+	position: relative;
+	height: 100%;
+	background-color: #272822;
+	padding: 50px;
+	color: #a6e22e;
+	-webkit-transition: all 0.5s;
+}
+
+.welcome-view.out {
+	-webkit-transform: translateX(-2000px);
+}
+	
+.welcome-view .welcome {
+	font-size: 28px;
+	margin-bottom: 0;
+	text-shadow: 1px 1px 15px #000;
+	transition: all 3s;
+}
+
+.welcome-view .logo {
+	font-size: 82px;
+	font-weight: bold;
+	text-shadow: 1px 1px 50px #000;
+	margin: 0;
+	transition: all 3s;
+}
+
+.welcome-view .logo-sub {
+	margin: 0;
+	font-size: 22px;
+	margin-left: 650px;
+	transition: all 3s;
+}
+
+.welcome-view .actions {
+	margin: 0 auto;
+	margin-top: 100px;
+	width: 780px;
+	display: block;
+	height: 270px;
+}
+
+.welcome-view .actions li {
+	list-style-type: none;
+	float: left;
+	width: 220px;
+	height: 160px;
+	display: inline-block;
+	margin-right: 40px;
+	border-radius: 20px;
+	background-color: #a6e22e;
+	text-align: center;
+	padding-top: 60px;
+	box-shadow: 1px 1px 30px #000;
+	cursor: pointer;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+.welcome-view .actions li:hover {
+	box-shadow: 1px 1px 30px #fff;
+}
+
+.welcome-view .actions li:active {
+	box-shadow: 1px 1px 100px #fff;
+}
+
+.welcome-view .actions li a {
+	color: #272822;
+	text-align: center;
+	font-size: 32px;
+	font-weight: bold;
+}
+
+.welcome-view .contribute div {
+	text-align: center;
+}
+
+.welcome-view .contribute p {
+	text-align: center;
+	font-size: 14px;
+}

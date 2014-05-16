@@ -1,0 +1,20 @@
+.drop-file-zone {
+	width: 500px;
+	height: 200px;
+	border: 1px solid #bdbdbd;
+	background-color: #e4e4e4;
+	text-align: center;
+}
+
+.drop-file-zone > div {
+	color: #ffffff;
+	font-size: 32px;
+	margin-top: 70px;
+	font-family: Arial;
+	font-weight: bold;
+	transition: all 1s;
+}
+
+.drop-file-zone.hover > div {
+	color: #000000;
+}

@@ -1,0 +1,167 @@
+.code-view {
+	position: relative;
+	height: 100%;
+}
+
+.code-view h1 {
+	color: #fff;
+	font-size: 14px;
+	margin: 10px 10px 0 10px;
+	font-weight: normal;
+	text-shadow: 2px 2px 15px #000;
+}
+
+.code-view .bar {
+	border: 1px solid #000;
+	margin: 10px;
+	background-color: #272822;
+	padding: 15px;
+	position: relative;
+}
+
+.code-view .bar .text {
+	color: #a6e22e;
+}
+
+.code-view .messages {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 130px;
+	border: 1px solid #000;
+	background-color: #272822;
+	z-index: 999;
+	margin: 10px;
+	padding: 10px;
+	transition: all 0.3s;
+	-webkit-transform: translateY(150px);
+	box-shadow: -1px 0 10px #000;
+	text-align: center;
+	color: #a6e22e;
+	font-size: 14px;
+}
+
+.code-view .messages.errors > .tab {
+	color: #FF0000;
+	-webkit-animation: error-animation 0.5s linear 0 infinite alternate;
+}
+
+@-webkit-keyframes error-animation {
+	0% {
+		box-shadow: 0 0 0 #FF0000;
+	}
+	100% {
+		box-shadow: 0 -5px 50px #FF0000;
+	}
+}
+
+.code-view .messages > .tab {
+	position: absolute;
+	top: -25px;	
+	width: 100px;
+	height: 25px;
+	background-color: #272822;
+	border-radius: 2px;
+	margin-left: -50px;
+	left: 50%;
+	box-shadow: 0 -5px 5px #000;
+}
+
+.code-view .messages:hover {
+	-webkit-transform: translateY(0);
+}
+
+.code-view .messages > .content {
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+}
+
+.code-view .messages > .content > div {
+	margin: 10px 0 10px 10px;
+	width: 100%;
+	text-align: left;
+}
+
+.code-view .messages > .content > div > span {
+	display: inline-block;
+	margin-right: 10px;
+	text-align: left;
+	color: #000;
+}
+
+.code-view .messages > .content > div > .icon {
+	width: 16px;
+	height: 16px;
+	background-color: #E10000;
+	border-radius: 16px;
+	color: #fff;
+	text-align: center;
+	vertical-align: top;
+	font-size: 13px;
+}
+
+.code-view .messages > .content > div > .icon:before {
+	content: 'x';
+}
+
+.code-view .messages > .content > div > .module {
+	width: 100px;
+}
+
+.code-view .messages > .content > div > .message {
+	width: 1000px;
+}
+
+.code-view > .tab {
+	padding: 10px;
+	position: absolute;
+	left: 0;
+	top: 50px;
+	bottom: 0;
+	right: 0;
+	-webkit-transition: all 0.2s;
+}
+
+.code-view > .tab:nth-child(3n) {
+	-webkit-transform: translate3d(0, 0, 0);
+	z-index: 1;
+}
+
+.code-view > .tab:nth-child(3n).focus {
+	
+}
+
+.code-view > .tab:nth-child(3n+1) {
+	-webkit-transform: translate3d(600px, 0, 0);
+	z-index: 2;
+}
+
+.code-view > .tab:nth-child(3n+1).focus {
+	-webkit-transform: translate3d(50px, 0, 0);
+}
+
+.code-view > .tab:nth-child(3n+2) {
+	-webkit-transform: translate3d(700px, 0, 0);
+	z-index: 3;
+}
+
+.code-view > .tab:nth-child(3n+2).focus {
+	-webkit-transform: translate3d(100px, 0, 0);
+}
+
+.code-section-view {
+	height: 100%;
+	width: 100%;
+}
+
+.code-section-view .editor {
+	width: 100%;
+	height: 100%;
+}
+
+.code-section-view .CodeMirror {
+	height: 100%;
+	border: 1px solid #000;
+}

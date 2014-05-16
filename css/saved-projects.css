@@ -1,0 +1,60 @@
+.saved-projects {
+	width: 500px;
+	height: 400px;
+}
+
+.saved-projects > div {
+	float: left;
+	height: 100%;
+	border: 1px solid #a6e22e;
+	border-radius: 5px;
+	margin-right: 5px;
+	padding: 10px;
+}
+
+.saved-projects > div:last-child {
+	margin-right: 0;
+}
+
+.saved-projects .selection {
+	width: 200px;
+	overflow-y: scroll;
+}
+
+.saved-projects .selection > div {
+	margin: 5px;
+	padding: 10px;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+.saved-projects .selection > div.selected {
+	background-color: #a6e22e;
+	border-radius: 5px;
+	color: #272822;
+}
+
+.saved-projects .description {
+	width: 250px;
+	line-height: 30px;
+	position: relative;
+}
+
+.saved-projects .delete-button {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	padding: 5px 20px 5px 20px;
+	border-radius: 5px;
+	background-color: #D51D1D;
+	color: #fff;
+	cursor: pointer;
+}
+
+.saved-projects .delete-button:hover {
+	background-color: #FF3F3F;
+}
+
+.saved-projects .delete-button:active {
+	box-shadow: inset 1px 1px 5px #000;
+}
