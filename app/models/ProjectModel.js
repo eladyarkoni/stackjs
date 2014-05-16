@@ -243,9 +243,9 @@ Class('ProjectModel', {
 						options.progress(80);
 						setTimeout(function() {
 							options.progress(100);
-							App.filemanager.writeFile(self.generateProjectFileName("zip"), build.generate({type: 'blob'}), function(file) {
+							App.filemanager.writeFile(self.generateProjectFileName("zip"), build.getArchiveBlob(), function(file) {
 								var url = file.toURL();
-								options.success(url, build);
+								options.success(url, build, file);
 							}, options.error);
 						}, 500);
 					}, options.error);
@@ -254,22 +254,13 @@ Class('ProjectModel', {
 		}, options.error);
 	},
 
-	buildAndroidProject: function(options) {
-		// download project
+	build: function(params) {
+		params.success = params.success || function(){};
 		this.download({
-			rootDirectory: 'android/assets/www',
 			success: function(url, build) {
-				// create android project
-				options.success(url);
-
-
-
-
-			},
-			error: options.error,
-			progress: function(percentage) {
-				percentage = percentage * 0.5;
-				options.progress(percentage);
+				build.open('/build/', function(buildUrl){
+					params.success(buildUrl);
+				});
 			}
 		});
 	}

@@ -194,10 +194,10 @@ Class('TitlebarView::STView', {
 	},
 
 	runProject: function() {
-		this.model.download({
+		this.model.build({
 			success: function(url) {
-				
-			}		
+				window.open(url, "buildwindow", "height=480,width=320");
+			}
 		});
 	},
 
@@ -303,44 +303,6 @@ Class('TitlebarView::STView', {
 			context: this
 		});
 		this.addView(importDialog, document.body);
-	},
-
-	projectAndroidBuild: function() {
-		var self = this;
-		var buildAppDialog = new DialogView({
-			title: "Building Android App...",
-			fields: [
-				{
-					type: 'bar'
-				}
-			]
-		});
-		this.addView(buildAppDialog, document.body);
-		buildAppDialog.updateBar(0);
-		this.model.buildAndroidProject({
-			success: function(url) {
-				buildAppDialog.updateData({
-					fields: [
-						{
-							type: 'link',
-							href: url,
-							label: 'Click here to download the file.',
-							id: 'download',
-							download: self.model.generateProjectFileName('zip')
-						}
-					]
-				});
-			},
-			error: function(err){
-				buildAppDialog.remove();
-				if (err.type === 'NoMainViewFound') {
-					self.showMessage("No project main view is found");
-				}
-			},
-			progress: function(percetage) {
-				buildAppDialog.updateBar(percetage);
-			}
-		});
 	},
 
 	// Device actions
