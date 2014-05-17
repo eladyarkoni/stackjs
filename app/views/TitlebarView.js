@@ -194,8 +194,10 @@ Class('TitlebarView::STView', {
 	},
 
 	runProject: function() {
+		App.notificationCenter.postNotification('message', "Building project...");
 		this.model.build({
 			success: function(url) {
+				App.notificationCenter.postNotification('message', "Project is built successfully");
 				window.open(url, "buildwindow", "height=480,width=320");
 			}
 		});

@@ -258,7 +258,7 @@ Class('ProjectModel', {
 		params.success = params.success || function(){};
 		this.download({
 			success: function(url, build) {
-				build.open('/build/', function(buildUrl){
+				build.open(function(buildUrl){
 					params.success(buildUrl);
 				});
 			}

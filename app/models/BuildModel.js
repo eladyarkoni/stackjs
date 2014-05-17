@@ -6,22 +6,27 @@ Class('BuildModel', {
 	BUILD_DIR: '/build',
 	INDEX_FILE_NAME: 'index.html',
 	indexFilePath: null,
+	date: null,
+	currentBuildDir: null,
 
 	BuildModel: function() {
+		this.date = new Date();
 		this.zip = new JSZip();
+		this.currentBuildDir = this.BUILD_DIR + '/' + 'build_' + this.date.getTime();
 		this.dirs.push(this.BUILD_DIR);
+		this.dirs.push(this.currentBuildDir);
 	},
 
 	file: function(path, data) {
-		if (path.search(/index\.html/) !== -1) {
+		if (path.indexOf(this.INDEX_FILE_NAME) !== -1) {
 			this.indexFilePath = path;
 		}
-		this.files.push([this.BUILD_DIR + "/" + path, data]);
+		this.files.push([this.currentBuildDir + "/" + path, data]);
 		return this.zip.file(path, data);
 	},
 
 	folder: function(path) {
-		this.dirs.push(this.BUILD_DIR + "/" + path);
+		this.dirs.push(this.currentBuildDir + "/" + path);
 		return this.zip.folder(path);
 	},
 
@@ -29,7 +34,7 @@ Class('BuildModel', {
 		return this.zip.generate({type: 'blob'});
 	},
 
-	open: function(directory, success) {
+	open: function(success) {
 		var self = this;
 		var dirhelper = function(dirs, position, callback) {
 			var dir;
@@ -53,12 +58,13 @@ Class('BuildModel', {
 				callback();
 			}
 		};
-		dirhelper(this.dirs, 0, function(){
+		dirhelper(self.dirs, 0, function(){
 			filehelper(self.files, 0, function(){
-				App.filemanager.readFile(self.BUILD_DIR + "/" + self.indexFilePath, function(content, entry){
+				App.filemanager.readFile(self.currentBuildDir + "/" + self.indexFilePath, function(content, entry){
 					success(entry.toURL());
 				});
 			});
 		});
+		
 	}
 });
