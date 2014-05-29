@@ -194,7 +194,7 @@ Class('ProjectModel', {
 		];
 
 		var projectBaseFiles = [
-			options.rootDirectory + "/lib/stackjs.mobile.js", function(success, error) {
+			options.rootDirectory + "/lib/stackjs.js", function(success, error) {
 				Server().getLibrary(function(data){
 					success(CodeService().minifyCode(data));
 				}, error);
@@ -216,7 +216,7 @@ Class('ProjectModel', {
 			},
 			options.rootDirectory + "/index.html", function(success, error) {
 				var allJSScripts = [];
-				allJSScripts.push('<script type="text/javascript" src="lib/stackjs.mobile.js"></script>');
+				allJSScripts.push('<script type="text/javascript" src="lib/stackjs.js"></script>');
 				for (var i = 0; i < self.files[1].files.length; i++) {
 					allJSScripts.push('<script type="text/javascript" src="app/services/'+self.files[1].files[i].name+'.js"></script>');
 				}

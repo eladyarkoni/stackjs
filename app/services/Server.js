@@ -25,7 +25,7 @@ Class('Server::STServer', {
 	},
 
 	getLibrary: function(success, error) {
-		this.get('lib/stackjs.mobile.js', null, null, function(data){
+		this.get('lib/stackjs.js', null, null, function(data){
 			success(data);
 		},error,{sync:true});
 	},

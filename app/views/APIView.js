@@ -5,7 +5,7 @@ Class('APIView::STView', {
 	apiContainerEl: null,
 
 	render: function() {
-		this.loadAPI('lib/stackjs.mobile.api.json', this.apiContainerEl);
+		this.loadAPI('lib/stackjs.api.json', this.apiContainerEl);
 		setTimeout(this.context(function(){
 			var textAreas = this.select('textarea');
 			if (textAreas === this.element) { return; }
