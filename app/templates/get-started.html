@@ -3,10 +3,11 @@
 			<div class="btn" onclick="@close">Close</div>
 			<h1>Get Started</h1>
 			<p>
-				This screen will guide you how to start working with stackJS mobile framework.
+				Getting started with stackJS framework is very easy.<br>StackJS is made for developers who wants their client-side code to be organized and clean.<br>
+				This screen will show you how to do this magic.
 			</p>
 			<p>
-				StackJS mobile framework let you build great mobile applications with javascript.
+				StackJS framework let you build great web and mobile applications with javascript.
 				<br>
 				StackJS keeps your application code readable and makes your developement process swift and simple.
 				<br><br>
@@ -28,8 +29,8 @@
 				this.age = age;
 			},
 
-			say_hello: function() {
-				return "Hello, my name is " + this.name + " and I'm " + this.age + " years old";
+			sayHello: function() {
+				console.log("Hello, my name is " + this.name + " and I'm " + this.age + " years old");
 			}
 		});
 
@@ -41,7 +42,7 @@
 		// If you don't have any constructor, use the stackJS object default constructor:
 		var myHuman = new Human({name: 'John', age: 30});
 
-		myHuman.say_hello();
+		myHuman.sayHello();
 			</textarea>
 			<h2>2. Inheritance</h2>
 			<p>
@@ -50,14 +51,16 @@
 			<textarea>
 		Class('Kid::Human', {
 			
-			play: function() {
-				return "My name is " + this.name + " and I'm playing!";
+			// Constructor
+			Kid: function(name, age) {
+				this.name = name;
+				this.age = age;
 			}
 		});
 
 		// Create an object:
-		var myKid = new Kid({name: 'Danny', age: 10});
-		myKid.play();
+		var myKid = new Kid('Danny', 10);
+		myKid.sayHello();
 			</textarea>
 			<p>
 				StackJS creates setters and getters automatically for you!
@@ -70,7 +73,9 @@
 
 		});
 
-		var student = new Student({name: 'John', age: 30});
+		var student = new Student();
+		student.setName('John');
+		student.setAge(30);
 		student.setTitle('Computer science');
 		student.setYearsLeft(2);
 
@@ -80,7 +85,7 @@
 			<p>
 				StackJS class system supports singletons out of the box.
 				<br>
-				When a class is accessed for the first time without the 'new' declaration, a new shared instance is created and from now on, all class calls without the 'new' returns that instance.
+				When a class is accessed for the first time without the 'new' statement. a new shared object is created and all class calls will return that instance.
 				<br>
 				<textarea>
 		Class('MySingleton', {
@@ -99,7 +104,33 @@
 		// object1 == object2.
 				</textarea> 
 			</p>
-			<h2>4. The Stack</h2>
+			<h2>4. Static Methods</h2>
+			<p>
+				You can even create a static methods if you build a factory or a service class.
+				<br>
+				Just use the '$' sign as a prefix to method name.
+			</p>
+			<textarea>
+
+		Class('Car', {
+			
+			color: null,
+
+			Car: function(color) {
+				this.color = color;
+			}
+		});
+
+		Class('CarFactory', {
+
+			$createNewCar: function(color) {
+				return new Car(color);
+			}
+		});
+
+		var redCar = CarFactory.createNewCar('red');
+			</textarea>
+			<h2>5. The Stack</h2>
 			<p>
 				StackJS manages a call stack programmatically.
 				<br>
@@ -128,7 +159,7 @@
 		var b = new B();
 		b.printA(new A());
 			</textarea>
-			<h2>5. Object Delegation</h2>
+			<h2>6. Object Delegation</h2>
 			<p>
 				Any stackJS object can be a delegate for another object.
 				<br>
@@ -175,13 +206,54 @@
 			}
 		});
 			</textarea>
+			<p>
+				Lets see an example of the Android SDK Adapter implementation.
+			</p>
+			<textarea>
+Class('ListView', {
+	
+	listViewHTML: "",
+	
+	ListView: function() {
+		this.listViewHTML = "";
+	},
+
+	setAdapter: function(listViewAdapter) {
+		this.setDelegate(listViewAdapter);
+	},
+
+	renderListView: function() {
+		var count = this.callDelegate('getCount', null, 0);
+		this.listViewHTML = "<ul>";
+		for (var i = 0; i < count; i++) {
+			var view = this.callDelegate('getView', [i]);
+			this.listViewHTML += "<li>" + view + "</li>";
+		}
+		this.listViewHTML += "</ul>"
+		return this.listViewHTML;
+	}
+});
+
+Class('ListViewAdapter', {
+	
+	todos: ['go home', 'eat breakfest', 'do homework'],
+
+	getCount: function() {
+		return todos.length;
+	},
+
+	getView: function(position) {
+		return "<a>" + this.todos[i] + "</a>";
+	}
+});
+			</textarea>
 			<h1>The Application Framework</h1>
 			<p>
-				The application framework gives you all you need to create great mobile apps.
+				The application framework gives you the tools you need to create great mobile and web apps.
 			</p>
 			<h2>1. The Application Tree</h2>
 			<p>
-				Each stackJS mobile app includes the next file tree:
+				Each stackJS mobile app includes the directory tree:
 				<ul>
 					<li>
 						<a>Root</a>
@@ -205,10 +277,10 @@
 					</li>
 				</ul>
 			</p>
-			<h2>2. The View</h2>
+			<h2>2. The View Controller</h2>
 			<p>
-				The view object represents a view controller in your app.
-				any view has a template, which represents the html template for the view.
+				The view controller object represents a view controller in your app.
+				Each view controller has a template, html file or html string.
 				<br>
 				The view extends the STView class.
 			</p>
@@ -231,16 +303,37 @@
 			</p>
 			<p>Lets create a template for our table view inside the templates directory with the name: table-view.html</p>
 			<textarea>
-		<div class='table-view'>
-			<h1>Table Title</h1>
-			<div class="content"></div>
-		</div>		
+			<div class='table-view'>
+				<h1>Table Title</h1>
+				<div class="content"></div>
+			</div>		
+			</textarea>
+			<p>
+				You can also attach the html string to the view controller withour using a template file with the html property.
+				<br>
+				This is highly recommended if you choose to work with a module loader like requirejs.
+			</p>
+			<textarea>
+				// myview.js file
+				define(['text!templates/mytemplate.html'], function(myTemplateString){
+					
+					Class('MyView::STView', {
+
+						html: myTemplateString
+					});
+				});
+
+				// or without requirejs:
+				Class('MyView::STView', {
+
+					html: '<div>my view</div>'
+				});
 			</textarea>
 			<h2>3. Outlets</h2>
 			<p>
 				Outlets are used to connect between the template element and the view controller.
 				<br>
-				Lets go back to our example and create an outlet for the table title.
+				Lets go back to our example and create outlet for the table title.
 			</p>
 			<textarea>
 		<div class='table-view'>
@@ -289,7 +382,7 @@
 		</div>
 			</textarea>
 			<p>
-				And the method inside out view controller.
+				And the method inside our view controller.
 			</p>
 			<textarea>
 		Class('TableView::STView', {
@@ -378,9 +471,16 @@
 			<p>
 				The StackJS application framework comes with several services that any application needs.
 			</p>
+			<p>
+				The STApplication creates a global variable reference called 'App'.
+				<br>
+				The application creates instances for each service. 
+			</p>
 			<p><u>STUserSettings</u></p>
 			<p>
-				The STUserSettings holds a map of keys and values which is dedicated for user settings and stored on the file system which means that it's not deleted after the user closes the App. 
+				The STUserSettings holds a map of keys and values which is dedicated for user settings .
+				This data is saved on the browser local storage.
+				This service can save and fetch also json object. (you dont need to parse and stringify your objects) 
 			</p>
 			<textarea>
 		// save key and value
@@ -420,7 +520,7 @@
 			<p>
 				The STServer represents a server which can be your application server or any other thirdparty server.
 				<br>
-				You can define as many server as you like.
+				You can define as many servers as you like.
 			</p>
 			<textarea>
 		// Define your application server
@@ -480,6 +580,48 @@
 
 				MyDatabase().getAllUsers(function(users){
 					...
+				});
+			</textarea>
+			<p><u>STStrings</u></p>
+			<p>
+				STStrings handles your applications dictionary.
+				STStrings can be accessed from the global variable 'Strings'.
+				<br>
+				The dictionary files will be defined inside the application config.json file:
+			</p>
+			<textarea>
+				// config.json
+				{
+					"strings": {
+						"english": "config/strings.english.json",
+						"russian": "config/strings.russian.json"
+					}
+				}
+				// strings.english.json
+				{
+					'hello_world': 'Hello World',
+					'click': 'Click',
+					...
+				}
+			</textarea>
+			<p>
+				Access string from template file:
+			</p>
+			<textarea>
+				<div>
+					<p>@strings.hello_world</p>
+					<button>@strings.click</button>
+				</div>
+			</textarea>
+			<p>
+				Access string from javascript file:
+			</p>
+			<textarea>
+				Class('MyView::STView', {
+					
+					render: function(){
+						this.select('div.button').innerHTML = Strings.get('click');
+					}
 				});
 			</textarea>
 			<br>
