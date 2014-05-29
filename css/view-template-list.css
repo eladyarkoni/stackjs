@@ -28,6 +28,8 @@
 	list-style-type: none;
 	margin: 15px;
 	cursor: pointer;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
 	transition: all 0.3s;
 }
 

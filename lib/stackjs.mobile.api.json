@@ -535,7 +535,7 @@
 				"load": {
 					"input": "String language, String dictionaryFileName",
 					"output": "void",
-					"description" "Load a new dictionary file, this method is called by STApplication for each dictionary file that mentioned inside the config.json"
+					"description": "Load a new dictionary file, this method is called by STApplication for each dictionary file that mentioned inside the config.json"
 				}
 			}
 		}

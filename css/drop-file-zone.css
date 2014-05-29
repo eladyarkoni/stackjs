@@ -13,6 +13,9 @@
 	font-family: Arial;
 	font-weight: bold;
 	transition: all 1s;
+	-webkit-transition: all 1s;
+	-ms-transition: all 1s;
+	-moz-transition: all 1s;
 }
 
 .drop-file-zone.hover > div {

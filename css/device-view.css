@@ -5,7 +5,13 @@
 	display: inline-block;
 	box-shadow: 1px 1px 20px #fff;
 	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	transform: translate3d(0, 0, 0);
 	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
+	-ms-transform: translate3d(0, 0, 0);
 	position: absolute;
 	right: 20px;
 	top: 0;
@@ -23,6 +29,10 @@
 	width: 100%;
 	height: 100%;
 	background-color: #272822;
+}
+
+.device-view.none {
+	display: none;
 }
 
 .device-view.galaxy-s3 {

@@ -19,6 +19,8 @@
 	text-indent: 2px;
 	margin-top: 15px;
 	cursor: pointer;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
 	transition: all 0.5s;
 	position: relative;
 }
@@ -28,6 +30,7 @@
 	padding-right: 2px;
 	width: 28px;
 	height: 18px;
+	-webkit-border-radius: 20px;
 	border-radius: 20px;
 	background-color: #a6e22e;
 	color: #272822;
@@ -38,6 +41,8 @@
 	text-align: center;
 	font-weight: bold;
 	opacity: 0;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
 	transition: all 1s;
 }
 
@@ -46,6 +51,8 @@
 }
 
 .project-tree-item .delete:active {
+	-webkit-transition: all 0.1s;
+	-moz-transition: all 0.1s;
 	transition: all 0.1s;
 	box-shadow: inset 1px 1px 10px #000;
 }

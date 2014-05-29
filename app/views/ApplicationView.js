@@ -13,26 +13,19 @@ Class('ApplicationView::STView', {
 		this.titleBarView.setDelegate(this);
 		this.addView(this.titleBarView, '.title-bar');
 		this.addView(new WelcomeView({ delegate: this}), '.code-container');
-		if (!window.chrome) {
+		if (!App.settings.get('visited')) {
 			this.addView(new DialogView({
-				title: "Sorry :(",
-				message: 'The StackJS IDE supports only Chrome Browser right now.'
+				title: 'Welcome',
+				message: 'Welcome to StackJS IDE for mobile.<br><br>Please visit the "get started" section before you begin.',
+				buttons: [
+					{
+						label: 'Ok',
+						type: 'ok'
+					}
+				],
+				callback: function(){}
 			}), document.body);
-		} else {
-			if (!App.settings.get('visited')) {
-				this.addView(new DialogView({
-					title: 'Welcome',
-					message: 'Welcome to StackJS IDE for mobile.<br><br>Please visit the "get started" section before you begin.',
-					buttons: [
-						{
-							label: 'Ok',
-							type: 'ok'
-						}
-					],
-					callback: function(){}
-				}), document.body);
-				App.settings.set('visited', true);
-			}
+			App.settings.set('visited', true);
 		}
 		this.loadDemoProjects();
 	},
@@ -62,6 +55,18 @@ Class('ApplicationView::STView', {
 
 		setTimeout(this.context(function(){
 			this.toggleClass(this.codeContainerEl, 'collapsed', true);
+			if (!App.settings.get('ide-visited')) {
+				this.addView(new DialogView({
+					title: 'By The Way...',
+					message: "This IDE is created with StackJS Framework.",
+					buttons: [
+						{label: 'Ok', type: 'ok'}
+					],
+					callback: this.context(function(){
+					})
+				}));
+				App.settings.set('ide-visited', true);
+			}
 		}),500);
 	},
 
