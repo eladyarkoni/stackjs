@@ -1,513 +1,543 @@
 {
-  "name": "StackJS Mobile API",
-  "version": "1.0",
-  "classes": {
-    "StackJS": {
-      "description": "Access to StackJS engine.",
-      "methods": {
-        "setup": {
-          "input": "Object setupMap",
-          "output": "void",
-          "description": "This method gets the stackJS setup object.",
-          "example": [
-            "StackJS.setup({stackSize: 100, showWarnings: true});"
-          ]
-        }
-      }
-    },
-    "STObject": {
-      "description": "The StackJS default object, all other objects in stackJS extend it.",
-      "properties": {
-        "delegate": {
-          "type": "STObject",
-          "description": "The object delegate (if any) (default: null)"
-        }
-      },
-      "methods": {
-        "isExtends": {
-          "input": "String className",
-          "output": "Boolean",
-          "description": "Returns true if extends this class name",
-          "example": [
-            "if (human.isExtends('Doctor')) {",
-            "    return 'this is a doctor';",
-            "}"
-          ]
-        },
-        "callDelegate": {
-          "input": "String method, Array params, defaultValue",
-          "output": "*",
-          "description": "Calls a delegate method and pass it array of params. if there is no such method, the default value is returned",
-          "example": [
-            "var listSize = this.callDelegate('listSize', [], 0);",
-            "for (var i = 0; i < listSize; i++) {",
-            "    // do something...",
-            "}"
-          ]
-        },
-        "clone": {
-          "input": "",
-          "output": "Object",
-          "description": "Cloning the object.",
-          "example": [
-            "var newCar = prototypeCar.clone()"
-          ]
-        },
-        "context": {
-          "input": "Method",
-          "output": "void",
-          "description": "Running the method with the object context",
-          "example": [
-            "Server().login(user, password, this.context(function(currentUser) {",
-            "    this.user = currentUser;",
-            "}));"
-          ]
-        }
-      }
-    },
-    "STApplication": {
-      "description": "The application framework object. used inside the main.js file only",
-      "methods": {
-        "Constructor": {
-          "input": "Object applicationConfig",
-          "output": "void",
-          "description": "Initialized the application framework with the application configuration",
-          "example": [
-            "return new STApplication({ view: ApplicationView });"
-          ]
-        }
-      }
-    },
-    "STUserSettings": {
-      "description": "Manages the application user settings. all user settings are saved on the file system and not cleaned up when the app is stopped.",
-      "methods": {
-        "set": {
-          "input": "String key, Object value",
-          "output": "void",
-          "description": "Save user settings value for key.",
-          "example": [
-            "App.settings.set('application_volume', 40);",
-            "App.settings.set('user_location', userLocationObject);"
-          ]
-        },
-        "get": {
-          "input": "String key",
-          "output": "Object",
-          "description": "Get user settings value for key.",
-          "example": [
-            "var myAppVolume = App.settings.get('application_volume');",
-            "var userLocation = App.settings.get('user_location');",
-            "return 'I lived in ' + userLocation.city;"
-          ]
-        }
-      }
-    },
-    "STServer": {
-      "description": "Define an application server with ajax services.",
-      "properties": {
-        "domain": {
-          "type": "String",
-          "description": "The server domain."
-        }
-      },
-      "methods": {
-        "request": {
-          "input": "String url, String method, Object data, Object headers, Function success, Function error",
-          "output": "void",
-          "description": "Make a server request by method (put,post,get...), url, data, headers, success callback and error callback. The data describes an object which sent to server. the url can be a url format like: /rest/login/:userId when the data object may contains the userId attribute.",
-          "example": [
-            "Server().request('/rest/user/:userId/album/:albumId', 'get', { userId: 3, albumId: 5}, {}, function(){}, function(){});",
-            "Server().request('/rest/user/login', 'post', {user: 'john', password: '123456'}, {}, successCallback, errorCallback);"
-          ]
-        },
-        "get": {
-          "input": "String url, Object data, Object headers, Function success, Function error",
-          "output": "void",
-          "description": "Calls the request function with 'get' method"
-        },
-        "post": {
-          "input": "String url, Object data, Object headers, Function success, Function error",
-          "output": "void",
-          "description": "Calls the request function with 'post' method"
-        }
-      }
-    },
-    "STView": {
-      "description": "The view controller.",
-      "properties": {
-        "element": {
-          "type": "DOMElement",
-          "description": "holds the generated dom element for the view controller."
-        },
-        "subviews": {
-          "type": "Array",
-          "description": "All view subviews."
-        },
-        "parentview": {
-          "type": "STView",
-          "description": "The parent view for the subview."
-        },
-        "template": {
-          "type": "string",
-          "description": "The template name (inside the templates directory) for the view. The view element is generated when the view is initialized."
-        }
-      },
-      "methods": {
-        "initTemplate": {
-          "input": "String html",
-          "output": "void",
-          "description": "Generates the view element by the new html string template",
-          "example": [
-            "if (this.type === 'Human') {",
-            "    this.initTemplate(humanViewTemplateString);",
-            "} else { ",
-            "    this.initTemplate(otherViewTemplateString);",
-            "}"
-          ]
-        },
-        "render": {
-          "input": "",
-          "output": "void",
-          "description": "Called when the view is rendered on the screen. Developers can implements this method to do things on the view after its renderes.",
-          "example": [
-            "...",
-            "render: function() {",
-            "    this.titleElement.innerHTML = this.title;",
-            "},",
-            "..."
-          ]
-        },
-        "callSubviews": {
-          "input": "String methodName, Object params",
-          "output": "void",
-          "description": "Call the method on each subview (if exists) and pass the params object.",
-          "example": [
-            "this.callSubviews('update', newModel);"
-          ]
-        },
-        "addView": {
-          "input": "STView subview, String|DOMElement container (optional)",
-          "output": "void",
-          "description": "Add a subview to another view and render it. the container variable can be selector or dom element but its optional.",
-          "example": [
-            "Class('TableView::STView', {",
-            "    render: function(){ ",
-            "        for (var item in list) {",
-            "            this.addView(new ItemView({item: list[item]}));",
-            "        }",
-            "    }",
-            "});"
-          ]
-        },
-        "remove": {
-          "input": "Object options",
-          "output": "void",
-          "description": "Remove the view from parentview.",
-          "example": [
-            "Class('ItemView::STView', {",
-            "    onDelete: function() {",
-            "        this.remove();",
-            "    }",
-            "});"
-          ]
-        },
-        "beforeRemove": {
-          "input": "Object options",
-          "output": "void",
-          "description": "This method is called by the stackJS framework before the view is removed from the dom. This method gets options object that can be changed by this function to affect on the remove method. (options.wait: set this parameter to milliseconds to add a delay before the view will be removed from the dom.)",
-          "example": [
-            "...",
-            "beforeRemove: function(options) {",
-            "   this.element.className += ' remove-animation';",
-            "   options.wait = 1000;",
-            "}",
-            "..."
-          ]
-        },
-        "reset": {
-          "input": "",
-          "output": "void",
-          "description": "Reset the view. clear all added subviews, events and elements.",
-          "example": [
-            "this.reset();"
-          ]
-        },
-        "select": {
-          "input": "String selector",
-          "output": "Array | DOMElement",
-          "description": "Select and return the element or element array by selector. (Allows you to get the view elements without using outlets).",
-          "example": [
-            "this.select('h1.title').innerHTML = 'Hello world'; ...",
-            "for (var i = 0; i < this.select('div').length; i++) ..."
-          ]
-        }
-      }
-    },
-    "STNavigationView": {
-      "description": "Extends STView and allows to navigate between views.",
-      "properties": {
-        "views": {
-          "type": "Array<STView>",
-          "description": "holds a stack of views for the navigation controller."
-        }
-      },
-      "methods": {
-        "navigate": {
-          "input": "STView view, String|DOMElement container (optional)",
-          "output": "void",
-          "description": "Renders a new view inside the navigation view element or inside the container. each view of the navigation view has a reference to the navigation view controller: this.navigationView.",
-          "example": [
-            "Class('ApplicationView::STNavigationView', {",
-            "    newGameClicked: function() {",
-            "        this.navigate(new GameView());",
-            "    },",
-            "    scoreListClicked: function() {",
-            "        this.navigate(new ScoreListView());",
-            "    }",
-            "});"
-          ]
-        },
-        "back": {
-          "input": "Object options",
-          "output": "void",
-          "description": "Go back to previous view.",
-          "example": [
-            "Class('GameView::STView', {",
-            "    gameHasEnded: function() {",
-            "        this.navigationView.back();",
-            "    }",
-            "});"
-          ]
-        }
-      }
-    },
-    "STNotificationCenter": {
-      "description": "Loaded by the application framework and is accessed by App.notificationCenter property. used to send and received notifications all over the application components.",
-      "properties": {
-        "listeners": {
-          "type": "Object",
-          "description": "All listeners."
-        }
-      },
-      "methods": {
-        "addObserver": {
-          "input": "STObject observer, Function handler, String notificationName",
-          "output": "void",
-          "description": "Add new observer to the notification center. which listen to notificationName with handler.",
-          "example": [
-            "Class('LoadingView::STView', {",
-            "    LoadingView: function() {",
-            "       App.notificationCenter.addObserver(this, this.show, 'showLoadingNotification')",
-            "       App.notificationCenter.addObserver(this, this.hide, 'hideLoadingNotification')",
-            "    },",
-            "    ...",
-            "});"
-          ]
-        },
-        "postNotification": {
-          "input": "String notificationName, Object object",
-          "output": "void",
-          "description": "Sends notification with object",
-          "example": [
-            "App.notificationCenter.postNotification('showLoadingNotification');",
-            "Server().login(function(){",
-            "    App.notificationCenter.postNotification('hideLoadingNotification')",
-            "});"
-          ]
-        },
-        "removeObserver": {
-          "input": "STObject observer, Function handler, String notificationName",
-          "output": "void",
-          "description": "Remove the observer from notification center.",
-          "example": [
-            "App.notificationCenter.removeObserver(this, this.handler, 'SomeNotification');"
-          ]
-        }
-      }
-    },
-    "STDatabase": {
-      "description": "Web SQL database controller.",
-      "properties": {
-        "name": {
-          "type": "String",
-          "description": "Database name."
-        },
-        "size": {
-          "type": "Number",
-          "description": "Database size in bytes."
-        },
-        "version": {
-          "type": "String",
-          "description": "Database version"
-        },
-        "description": {
-          "type": "String",
-          "description": "Database description."
-        }
-      },
-      "methods": {
-        "save": {
-          "input": "String tableName, Object data, Function callback",
-          "output": "void",
-          "description": "Insert or update the data object inside a table.<br>The table is created if not exists.<br>The data object must have the id property which defines the unique id of the object.",
-          "example": [
-          ]
-        },
-        "get": {
-          "input": "String tableName, Object data, Function callback",
-          "output": "void",
-          "description": "",
-          "example": [
-          ]
-        },
-        "delete": {
-          "input": "String tableName, Object data, Function callback",
-          "output": "void",
-          "description": "",
-          "example": [
-          ]
-        }
-      }
-    },
-    "STFileManager": {
-      "description": "File system manager. StackJS framework initialize the file manager for us and it can be accessed from the application global variable: App.filemanager",
-      "configuration": "filesystem: { size: 1234 }",
-      "properties": {
-        "size": {
-          "type": "Number",
-          "description": "File system size in bytes. (50Mb default.)"
-        }
-      },
-      "methods": {
-        "Constructor": {
-          "input": "Integer size",
-          "output": "void",
-          "description": "Initialize the file system with size.",
-          "example": [
-            "var fs = new STFileManager(100 * 1024 * 1024);"
-          ]
-        },
-        "readFile": {
-          "input": "String path, Function success, Function error",
-          "output": "void",
-          "description": "Read file as text at path, success function returns the text.",
-          "example": [
-            "App.filemanager.readFile('/data/readme.txt', function(text){ ... }, function(){});"
-          ]
-        },
-        "readDir": {
-          "input": "String path, Function success, Function error",
-          "output": "void",
-          "description": "Read directory from path, success function returns an array with directory content.",
-          "example": [
-            "App.filemanager.readDir('/data', function(filesArray){ ... }, function(){});"
-          ]
-        },
-        "createFile": {
-          "input": "String path, Function success, Function error",
-          "output": "void",
-          "description": "Create a new file.",
-          "example": [
-            "App.filemanager.createFile('/data/readme.txt', function(fileEntry){}, function(){});"
-          ]
-        },
-        "createDir": {
-          "input": "String path, Function success, Function error",
-          "output": "void",
-          "description": "Create a new directory.",
-          "example": [
-            "App.filemanager.createDir('/data', function(dirEntry){}, function(){});"
-          ]
-        },
-        "writeFile": {
-          "input": "String path, String data, Function success, Function error",
-          "output": "void",
-          "description": "Create file if not exists and write text data to file",
-          "example": [
-            "App.filemanager.writeFile('/data/readme.txt', readmeText, function(fileEntry){}, function(){});"
-          ]
-        },
-        "deleteFile": {
-          "input": "String path, Function success, Function error",
-          "output": "void",
-          "description": "Delete a file",
-          "example": [
-            "App.filemanager.deleteFile('/data/readme.txt', function(){}, function(){});"
-          ]
-        },
-        "deleteDir": {
-          "input": "String path, Function success, Function error",
-          "output": "void",
-          "description": "Delete a directory",
-          "example": [
-            "App.filemanager.deleteDir('/data', function(){}, function(){});"
-          ]
-        }
-      }
-    },
-    "STLog": {
-     "description": "Logger manager. StackJS framework initialize the logger for us and it can be accessed from the global variable: Log",
-     "configuration": "logger: { level: 0 }",
-     "properties": {
-        "level": {
-          "type": "Integer",
-          "description": "Logger level (0 default): 0 - debug, 1 - info, 2 - warning, 3 - error."
-        }
-     },
-     "methods": {
-        "d": {
-          "input": "String tag, String message",
-          "output": "void",
-          "description": "Prints debugging message to console.",
-          "example": ["Log.d('filesystem', 'file is writable');"]
-        },
-        "i": {
-          "input": "String tag, String message",
-          "output": "void",
-          "description": "Prints information message to console.",
-          "example": ["Log.i('filesystem', 'file size is 40MB');"]
-        },
-        "w": {
-          "input": "String tag, String message",
-          "output": "void",
-          "description": "Prints warning message to console.",
-          "example": ["Log.w('filesystem', 'file is too big');"]
-        },
-        "e": {
-          "input": "String tag, String message",
-          "output": "void",
-          "description": "Prints error message to console.",
-          "example": ["Log.e('filesystem', 'file is not writable');"]
-        },
-        "getStackTrace": {
-          "input": "",
-          "output": "void",
-          "description": "Prints the stack to the console.",
-          "example": ["Log.getStackTrace(); "]
-        }
-     }
-    },
-    "STStrings": {
-      "description": "StackJS framework dictionary. StackJS framework initialize the dictionary for us and it can be accessed from the global variable: Strings",
-      "configuration": "strings: { 'english': '<strings file>', 'russian': '<strings file>', ... }",
-      "properties": {
-        "language": {
-          "type": "String",
-          "description": "The current language file of the app."
-        }
-      },
-      "methods": {
-        "get": {
-          "input": "String key",
-          "output": "String value",
-          "description": "Retuns the string value by key for the current language.<br>The strings can be generated also from the view template.<br>usage: @strings.[key]",
-          "example": [
-            "var actionLabel = Strings.get('actions.done');",
-            "// Or inside a template",
-            "<div>@strings.actions.done</div>"
-          ]
-        }
-      }
-    }
-  }
+	"name": "StackJS Mobile API",
+	"version": "1.0",
+	"classes": {
+		"StackJS": {
+			"description": "Access to StackJS engine.",
+			"methods": {
+				"setup": {
+					"input": "Object setupMap",
+					"output": "void",
+					"description": "This method gets the stackJS setup object.",
+					"example": [
+						"StackJS.setup({stackSize: 100, showWarnings: true});"
+					]
+				},
+				"attachTemplate": {
+					"input": "String className, String html",
+					"output": "void",
+					"description": "Attach template to stview class name, This method is called by the application framework when stview class is defined. stackjs lets your call this method even during runtime."
+				}
+			}
+		},
+		"STObject": {
+			"description": "The StackJS default object, all other objects in stackJS extend it.",
+			"properties": {
+				"delegate": {
+					"type": "STObject",
+					"description": "The object delegate (if any) (default: null)"
+				}
+			},
+			"methods": {
+				"isExtends": {
+					"input": "String className",
+					"output": "Boolean",
+					"description": "Returns true if extends this class name",
+					"example": [
+						"if (human.isExtends('Doctor')) {",
+						"    return 'this is a doctor';",
+						"}"
+					]
+				},
+				"callDelegate": {
+					"input": "String method, Array params, defaultValue",
+					"output": "*",
+					"description": "Calls a delegate method and pass it array of params. if there is no such method, the default value is returned",
+					"example": [
+						"var listSize = this.callDelegate('listSize', [], 0);",
+						"for (var i = 0; i < listSize; i++) {",
+						"    // do something...",
+						"}"
+					]
+				},
+				"clone": {
+					"input": "",
+					"output": "Object",
+					"description": "Cloning the object.",
+					"example": [
+						"var newCar = prototypeCar.clone()"
+					]
+				},
+				"context": {
+					"input": "Method",
+					"output": "void",
+					"description": "Running the method with the object context",
+					"example": [
+						"Server().login(user, password, this.context(function(currentUser) {",
+						"    this.user = currentUser;",
+						"}));"
+					]
+				}
+			}
+		},
+		"STApplication": {
+			"description": "The application framework object.",
+			"methods": {
+				"Constructor": {
+					"input": "Object applicationConfig",
+					"output": "void",
+					"description": "Initialized the application framework with the application configuration",
+					"example": [
+						"return new STApplication({ view: ApplicationView });"
+					]
+				}
+			}
+		},
+		"STUserSettings": {
+			"description": "Manages the application user settings. all user settings are saved on the file system and not cleaned up when the app is stopped.",
+			"methods": {
+				"set": {
+					"input": "String key, Object value",
+					"output": "void",
+					"description": "Save user settings value for key.",
+					"example": [
+						"App.settings.set('application_volume', 40);",
+						"App.settings.set('user_location', userLocationObject);"
+					]
+				},
+				"get": {
+					"input": "String key",
+					"output": "Object",
+					"description": "Get user settings value for key.",
+					"example": [
+						"var myAppVolume = App.settings.get('application_volume');",
+						"var userLocation = App.settings.get('user_location');",
+						"return 'I lived in ' + userLocation.city;"
+					]
+				},
+				"remove": {
+					"input": "String key",
+					"output": "void",
+					"description": "Delete user settings value by key",
+					"example": [
+						"App.settings.remove('my_key')"
+					]
+				}
+			}
+		},
+		"STServer": {
+			"description": "Define an application server with ajax services.",
+			"properties": {
+				"domain": {
+					"type": "String",
+					"description": "The server domain."
+				}
+			},
+			"methods": {
+				"request": {
+					"input": "String url, String method, Object data, Object headers, Function success, Function error",
+					"output": "void",
+					"description": "Make a server request by method (put,post,get...), url, data, headers, success callback and error callback. The data describes an object which sent to server. the url can be a url format like: /rest/login/:userId when the data object may contains the userId attribute.",
+					"example": [
+						"Server().request('/rest/user/:userId/album/:albumId', 'get', { userId: 3, albumId: 5}, {}, function(){}, function(){});",
+						"Server().request('/rest/user/login', 'post', {user: 'john', password: '123456'}, {}, successCallback, errorCallback);"
+					]
+				},
+				"get": {
+					"input": "String url, Object data, Object headers, Function success, Function error",
+					"output": "void",
+					"description": "Calls the request function with 'get' method"
+				},
+				"post": {
+					"input": "String url, Object data, Object headers, Function success, Function error",
+					"output": "void",
+					"description": "Calls the request function with 'post' method"
+				}
+			}
+		},
+		"STView": {
+			"description": "The view controller.",
+			"properties": {
+				"element": {
+					"type": "DOMElement",
+					"description": "holds the generated dom element for the view controller."
+				},
+				"subviews": {
+					"type": "Array",
+					"description": "All view subviews."
+				},
+				"parentview": {
+					"type": "STView",
+					"description": "The parent view for the subview."
+				},
+				"template": {
+					"type": "string",
+					"description": "The template name (inside the templates directory) for the view. The view element is generated when the view is initialized."
+				},
+				"html": {
+					"type": "String",
+					"description": "Use html string instead of template file."
+				}
+			},
+			"methods": {
+				"initTemplate": {
+					"input": "String html",
+					"output": "void",
+					"description": "Generates the view element by the new html string template",
+					"example": [
+						"if (this.type === 'Human') {",
+						"    this.initTemplate(humanViewTemplateString);",
+						"} else { ",
+						"    this.initTemplate(otherViewTemplateString);",
+						"}"
+					]
+				},
+				"render": {
+					"input": "",
+					"output": "void",
+					"description": "Called when the view is rendered on the screen. Developers can implements this method to do things on the view after its renderes.",
+					"example": [
+						"...",
+						"render: function() {",
+						"    this.titleElement.innerHTML = this.title;",
+						"},",
+						"..."
+					]
+				},
+				"callSubviews": {
+					"input": "String methodName, Object params",
+					"output": "void",
+					"description": "Call the method on each subview (if exists) and pass the params object.",
+					"example": [
+						"this.callSubviews('update', newModel);"
+					]
+				},
+				"toggleClass": {
+					"input": "DOMElement element, String className, Boolean condition",
+					"output": "void",
+					"description": "Toggle css class for the dom element",
+					"example": [
+						"this.toggleClass(this.buttonElement, 'disabled', inProgress)"
+					]
+				},
+				"addView": {
+					"input": "STView subview, String|DOMElement container (optional)",
+					"output": "void",
+					"description": "Add a subview to another view and render it. the container variable can be selector or dom element but its optional.",
+					"example": [
+						"Class('TableView::STView', {",
+						"    render: function(){ ",
+						"        for (var item in list) {",
+						"            this.addView(new ItemView({item: list[item]}));",
+						"        }",
+						"    }",
+						"});"
+					]
+				},
+				"remove": {
+					"input": "Object options",
+					"output": "void",
+					"description": "Remove the view from parentview.",
+					"example": [
+						"Class('ItemView::STView', {",
+						"    onDelete: function() {",
+						"        this.remove();",
+						"    }",
+						"});"
+					]
+				},
+				"beforeRemove": {
+					"input": "Object options",
+					"output": "void",
+					"description": "This method is called by the stackJS framework before the view is removed from the dom. This method gets options object that can be changed by this function to affect on the remove method. (options.wait: set this parameter to milliseconds to add a delay before the view will be removed from the dom.)",
+					"example": [
+						"...",
+						"beforeRemove: function(options) {",
+						"   this.element.className += ' remove-animation';",
+						"   options.wait = 1000;",
+						"}",
+						"..."
+					]
+				},
+				"reset": {
+					"input": "",
+					"output": "void",
+					"description": "Reset the view. clear all added subviews, events and elements.",
+					"example": [
+						"this.reset();"
+					]
+				},
+				"select": {
+					"input": "String selector",
+					"output": "Array | DOMElement",
+					"description": "Select and return the element or element array by selector. (Allows you to get the view elements without using outlets).",
+					"example": [
+						"this.select('h1.title').innerHTML = 'Hello world'; ...",
+						"for (var i = 0; i < this.select('div').length; i++) ..."
+					]
+				}
+			}
+		},
+		"STNavigationView": {
+			"description": "Extends STView and allows to navigate between views. This view is very usefull when you create an android webapp and you really want to support the android back button.",
+			"properties": {
+				"views": {
+					"type": "Array<STView>",
+					"description": "holds a stack of views for the navigation controller."
+				}
+			},
+			"methods": {
+				"navigate": {
+					"input": "STView view, String|DOMElement container (optional)",
+					"output": "void",
+					"description": "Renders a new view inside the navigation view element or inside the container. each view of the navigation view has a reference to the navigation view controller: this.navigationView.",
+					"example": [
+						"Class('ApplicationView::STNavigationView', {",
+						"    newGameClicked: function() {",
+						"        this.navigate(new GameView());",
+						"    },",
+						"    scoreListClicked: function() {",
+						"        this.navigate(new ScoreListView());",
+						"    }",
+						"});"
+					]
+				},
+				"back": {
+					"input": "Object options",
+					"output": "void",
+					"description": "Go back to previous view.",
+					"example": [
+						"Class('GameView::STView', {",
+						"    gameHasEnded: function() {",
+						"        this.navigationView.back();",
+						"    }",
+						"});"
+					]
+				}
+			}
+		},
+		"STNotificationCenter": {
+			"description": "Loaded by the application framework and is accessed by App.notificationCenter property. used to send and received notifications all over the application components.",
+			"properties": {
+				"listeners": {
+					"type": "Object",
+					"description": "All listeners."
+				}
+			},
+			"methods": {
+				"addObserver": {
+					"input": "STObject observer, Function handler, String notificationName",
+					"output": "void",
+					"description": "Add new observer to the notification center. which listen to notificationName with handler.",
+					"example": [
+						"Class('LoadingView::STView', {",
+						"    LoadingView: function() {",
+						"       App.notificationCenter.addObserver(this, this.show, 'showLoadingNotification')",
+						"       App.notificationCenter.addObserver(this, this.hide, 'hideLoadingNotification')",
+						"    },",
+						"    ...",
+						"});"
+					]
+				},
+				"postNotification": {
+					"input": "String notificationName, Object object",
+					"output": "void",
+					"description": "Sends notification with object",
+					"example": [
+						"App.notificationCenter.postNotification('showLoadingNotification');",
+						"Server().login(function(){",
+						"    App.notificationCenter.postNotification('hideLoadingNotification')",
+						"});"
+					]
+				},
+				"removeObserver": {
+					"input": "STObject observer, Function handler, String notificationName",
+					"output": "void",
+					"description": "Remove the observer from notification center.",
+					"example": [
+						"App.notificationCenter.removeObserver(this, this.handler, 'SomeNotification');"
+					]
+				}
+			}
+		},
+		"STDatabase": {
+			"description": "Web SQL database controller.",
+			"properties": {
+				"name": {
+					"type": "String",
+					"description": "Database name."
+				},
+				"size": {
+					"type": "Number",
+					"description": "Database size in bytes."
+				},
+				"version": {
+					"type": "String",
+					"description": "Database version"
+				},
+				"description": {
+					"type": "String",
+					"description": "Database description."
+				}
+			},
+			"methods": {
+				"save": {
+					"input": "String tableName, Object data, Function callback",
+					"output": "void",
+					"description": "Insert or update the data object inside a table.<br>The table is created if not exists.<br>The data object must have the id property which defines the unique id of the object.",
+					"example": [
+					]
+				},
+				"get": {
+					"input": "String tableName, Object data, Function callback",
+					"output": "void",
+					"description": "",
+					"example": [
+					]
+				},
+				"delete": {
+					"input": "String tableName, Object data, Function callback",
+					"output": "void",
+					"description": "",
+					"example": [
+					]
+				}
+			}
+		},
+		"STFileManager": {
+			"description": "File system manager. StackJS framework initialize the file manager for us and it can be accessed from the application global variable: App.filemanager",
+			"configuration": "filesystem: { size: 1234 }",
+			"properties": {
+				"size": {
+					"type": "Number",
+					"description": "File system size in bytes. (50Mb default.)"
+				}
+			},
+			"methods": {
+				"Constructor": {
+					"input": "Integer size",
+					"output": "void",
+					"description": "Initialize the file system with size.",
+					"example": [
+						"var fs = new STFileManager(100 * 1024 * 1024);"
+					]
+				},
+				"readFile": {
+					"input": "String path, Function success, Function error",
+					"output": "void",
+					"description": "Read file as text at path, success function returns the text.",
+					"example": [
+						"App.filemanager.readFile('/data/readme.txt', function(text){ ... }, function(){});"
+					]
+				},
+				"readDir": {
+					"input": "String path, Function success, Function error",
+					"output": "void",
+					"description": "Read directory from path, success function returns an array with directory content.",
+					"example": [
+						"App.filemanager.readDir('/data', function(filesArray){ ... }, function(){});"
+					]
+				},
+				"createFile": {
+					"input": "String path, Function success, Function error",
+					"output": "void",
+					"description": "Create a new file.",
+					"example": [
+						"App.filemanager.createFile('/data/readme.txt', function(fileEntry){}, function(){});"
+					]
+				},
+				"createDir": {
+					"input": "String path, Function success, Function error",
+					"output": "void",
+					"description": "Create a new directory.",
+					"example": [
+						"App.filemanager.createDir('/data', function(dirEntry){}, function(){});"
+					]
+				},
+				"writeFile": {
+					"input": "String path, String data, Function success, Function error",
+					"output": "void",
+					"description": "Create file if not exists and write text data to file",
+					"example": [
+						"App.filemanager.writeFile('/data/readme.txt', readmeText, function(fileEntry){}, function(){});"
+					]
+				},
+				"deleteFile": {
+					"input": "String path, Function success, Function error",
+					"output": "void",
+					"description": "Delete a file",
+					"example": [
+						"App.filemanager.deleteFile('/data/readme.txt', function(){}, function(){});"
+					]
+				},
+				"deleteDir": {
+					"input": "String path, Function success, Function error",
+					"output": "void",
+					"description": "Delete a directory",
+					"example": [
+						"App.filemanager.deleteDir('/data', function(){}, function(){});"
+					]
+				}
+			}
+		},
+		"STLog": {
+		 "description": "Logger manager. StackJS framework initialize the logger for us and it can be accessed from the global variable: Log",
+		 "configuration": "logger: { level: 0 }",
+		 "properties": {
+				"level": {
+					"type": "Integer",
+					"description": "Logger level (0 default): 0 - debug, 1 - info, 2 - warning, 3 - error."
+				}
+		 },
+		 "methods": {
+				"d": {
+					"input": "String tag, String message",
+					"output": "void",
+					"description": "Prints debugging message to console.",
+					"example": ["Log.d('filesystem', 'file is writable');"]
+				},
+				"i": {
+					"input": "String tag, String message",
+					"output": "void",
+					"description": "Prints information message to console.",
+					"example": ["Log.i('filesystem', 'file size is 40MB');"]
+				},
+				"w": {
+					"input": "String tag, String message",
+					"output": "void",
+					"description": "Prints warning message to console.",
+					"example": ["Log.w('filesystem', 'file is too big');"]
+				},
+				"e": {
+					"input": "String tag, String message",
+					"output": "void",
+					"description": "Prints error message to console.",
+					"example": ["Log.e('filesystem', 'file is not writable');"]
+				},
+				"getStackTrace": {
+					"input": "",
+					"output": "void",
+					"description": "Prints the stack to the console.",
+					"example": ["Log.getStackTrace(); "]
+				}
+		 }
+		},
+		"STStrings": {
+			"description": "StackJS framework dictionary. StackJS framework initialize the dictionary for us and it can be accessed from the global variable: Strings",
+			"configuration": "strings: { 'english': '<strings file>', 'russian': '<strings file>', ... }",
+			"properties": {
+				"language": {
+					"type": "String",
+					"description": "The current language file of the app."
+				}
+			},
+			"methods": {
+				"get": {
+					"input": "String key",
+					"output": "String value",
+					"description": "Retuns the string value by key for the current language.<br>The strings can be generated also from the view template.<br>usage: @strings.[key]",
+					"example": [
+						"var actionLabel = Strings.get('actions.done');",
+						"// Or inside a template",
+						"<div>@strings.actions.done</div>"
+					]
+				},
+				"load": {
+					"input": "String language, String dictionaryFileName",
+					"output": "void",
+					"description" "Load a new dictionary file, this method is called by STApplication for each dictionary file that mentioned inside the config.json"
+				}
+			}
+		}
+	}
 }
