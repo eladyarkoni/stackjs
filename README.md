@@ -9,6 +9,7 @@ StackJS is created after a lot of experience with large and scalable mobile and 
 
 ## How to learn StackJS
 
+You are about to learn StackJS very fast.
 Just go to [StackJS Website](http://www.stackjs.org) and then to 'Get Started' page.
 
 ## Create a new Project
