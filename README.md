@@ -1,5 +1,4 @@
 # [StackJS Framework](http://www.stackjs.org)
-=============================================
 
 StackJS framework lets you build great web and mobile applications with javascript, Keeping your application code readable and makes your developement process swift and simple.
 
@@ -10,7 +9,7 @@ StackJS is created after a lot of experience with large and scalable mobile and 
 
 ## How to learn StackJS
 
-Just go to [StackJS Website](http://www.stackjs.org) and go to Get Started page.
+Just go to [StackJS Website](http://www.stackjs.org) and then to 'Get Started' page.
 
 ## Create a new Project
 
