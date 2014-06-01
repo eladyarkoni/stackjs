@@ -249,14 +249,6 @@
 						"..."
 					]
 				},
-				"reset": {
-					"input": "",
-					"output": "void",
-					"description": "Reset the view. clear all added subviews, events and elements.",
-					"example": [
-						"this.reset();"
-					]
-				},
 				"select": {
 					"input": "String selector",
 					"output": "Array | DOMElement",

@@ -1,0 +1,15 @@
+<footer id="footer">
+	<span id="todo-count"><strong outlet="@itemLeftEl"></strong> item left</span>
+	<ul id="filters">
+		<li>
+			<a class="filter-all" href="#/">All</a>
+		</li>
+		<li>
+			<a class="filter-active" href="#/active">Active</a>
+		</li>
+		<li>
+			<a class="filter-completed" href="#/completed">Completed</a>
+		</li>
+	</ul>
+	<button id="clear-completed" onclick="@clearCompleted" outlet="@clearCompletedButton"></button>
+</footer>

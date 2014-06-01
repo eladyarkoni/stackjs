@@ -1,6 +1,6 @@
 /**
 *
-*	StackJS Framework For Mobile Version 1.0 17/05/2014
+*	StackJS Framework Version 1.0 01/06/2014
 *	Author: Elad Yarkoni
 *
 */
@@ -477,7 +477,7 @@
 		callDelegate: function(methodName, params, defaultReturnValue) {
 			if ((this.delegate) && (typeof(this.delegate[methodName]) !== 'undefined')) {
 				var ret = this.delegate[methodName].apply(this.delegate, params);
-				if (ret) {
+				if (ret || ret === 0) {
 					return ret;
 				} else {
 					return defaultReturnValue;
@@ -633,7 +633,7 @@
 
 		callSubviews: function(methodName, params) {
 			var subview;
-			for (var i = 0; i < this.subviews.length; i++) {
+			for (var i = this.subviews.length-1; i >= 0; i--) {
 				subview = this.subviews[i];
 				if (subview[methodName]) {
 					subview[methodName].apply(subview, params);
@@ -681,17 +681,13 @@
 		beforeRemove: function(options) {},
 
 		remove: function() {
-			var subview,
-				options = { wait: 1, remove: true },
-				self = this;
-
+			var subview, options = { wait: 0, remove: true }, self = this;
 			this.beforeRemove(options);
-
 			if (options.remove) {
 				if (Defaults.styleInjection) {
 					this.element.className = this.element.className.replace(' in', ' out');
 				}
-				setTimeout(function() {
+				var doRemove = function() {
 					if (self.parentview) {
 						for (var i = 0; i < self.parentview.subviews.length; i++) {
 							if (self.parentview.subviews[i] === self) {
@@ -712,14 +708,15 @@
 							self.element.className = self.element.className.replace(' out', '');
 						}
 					}
-				}, options.wait);
+				};
+				if (options.wait) {
+					setTimeout(doRemove,options.wait);
+				} else {
+					doRemove();
+				}
 				return true;
 			}
 			return false;
-		},
-
-		reset: function() {
-			this.element = generateViewElement(this, this.element);
 		},
 
 		select: function(selector) {
@@ -755,29 +752,40 @@
 		},
 
 		onRoute: function(path) {
-			var r,m;
+			var r = null,m = null,def_match = null,def_match_matches = null,best_match = null,best_match_matches = null,match_score = 0;
 			if (this._current_path === path) {return;}
 			for (r in this.routes) {
 				m = path.match(r);
-				if (m && m.length) {
-					var view = _classes[this.routes[r].view];
-					this._current_path = path;
-					if ((this._current_view) && (view.prototype._class == this._current_view._class)) {
-						if (this.routes[r].method && typeof(this._current_view[this.routes[r].method]) === 'function') {
-							this._current_view[this.routes[r].method].apply(this._current_view, m);
-						}
-					} else {
-						if (this._current_view !== null) {
-							this._current_view.remove();
-						}
-						this._current_view = new view();
-						this.addView(this._current_view, this.routes[r].container);
-						if (this.routes[r].method && typeof(this._current_view[this.routes[r].method]) === 'function') {
-							this._current_view[this.routes[r].method].apply(this._current_view, m);
-						}
-					}
-					return;
+				if (this.routes[r].default) {
+					def_match = r;
+					def_match_matches = m;
 				}
+				if (m && m.length && r.length >= match_score) {
+					match_score = r.length;
+					best_match_matches = m;
+					best_match = r;
+				}
+			}
+			r = best_match ? best_match : def_match;
+			m = best_match ? best_match_matches : def_match_matches;
+			if (r) {
+				var view = _classes[this.routes[r].view];
+				this._current_path = path;
+				if ((this._current_view) && (view.prototype._class == this._current_view._class)) {
+					if (this.routes[r].method && typeof(this._current_view[this.routes[r].method]) === 'function') {
+						this._current_view[this.routes[r].method].apply(this._current_view, m);
+					}
+				} else {
+					if (this._current_view !== null) {
+						this._current_view.remove();
+					}
+					this._current_view = new view();
+					this.addView(this._current_view, this.routes[r].container);
+					if (this.routes[r].method && typeof(this._current_view[this.routes[r].method]) === 'function') {
+						this._current_view[this.routes[r].method].apply(this._current_view, m);
+					}
+				}
+				return;
 			}
 		}
 	});
