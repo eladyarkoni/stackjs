@@ -4,7 +4,10 @@
   "version": "1.0.0",
   "main": "lib/stackjs.js",
   "ignore": [
-    "*.*",
+    "LICENSE",
+    "*.html",
+    "*.json",
+    "*.md",
     "app/",
     "assets/",
     "boilerplate/",
