@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "main": "lib/stackjs.js",
   "ignore": [
-    "*.*"
+    "*.*",
     "app/*",
     "assets/*",
     "boilerplate/*",
@@ -13,6 +13,6 @@
     "device/*",
     "examples/*",
     "thirdparties/*",
-    "lib/stackjs.api.json",
+    "lib/stackjs.api.json"
   ]
 }
