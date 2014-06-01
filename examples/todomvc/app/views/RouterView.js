@@ -3,6 +3,8 @@
 */
 Class('RouterView::STRouterView', {
 
+	html: '<div class="router-view"></div>',
+
 	routes: {
 		"/": {view: "MainView", method: "showAll", default: true},
 		"/active": {view: "MainView", method: "showActive"},

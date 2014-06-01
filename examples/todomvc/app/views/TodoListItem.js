@@ -7,6 +7,7 @@ Class('TodoListItem::STView', {
 	//outlets
 	labelEl: null,
 	checkbox: null,
+	editInput: null,
 
 	TodoListItem: function(todo) {
 		this.model = todo;
@@ -14,6 +15,7 @@ Class('TodoListItem::STView', {
 
 	render: function() {
 		this.labelEl.innerHTML = this.model.label;
+		this.editInput.value = this.model.label;
 		this.toggleClass(this.element, 'completed', this.model.completed);
 		if (this.model.completed) {
 			this.checkbox.setAttribute('checked', true);
@@ -27,8 +29,29 @@ Class('TodoListItem::STView', {
 		this.callDelegate('itemUpdated', [this.model]);
 	},
 
+	onBlur: function() {
+		this.toggleClass(this.element, 'editing', false);
+		this.updateEditedValue();
+	},
+
+	onDoubleClick: function() {
+		this.toggleClass(this.element, 'editing', true);
+	},
+
 	onDestroy: function(event) {
 		this.remove();
 		this.callDelegate('itemDeleted', [this.model]);
+	},
+
+	onKeyUp: function(event) {
+		if (event.keyCode === App.config.enterKeyCode) {
+			this.toggleClass(this.element, 'editing', false);
+		}
+	},
+
+	updateEditedValue: function() {
+		this.labelEl.innerHTML = this.editInput.value;
+		this.model.label = this.editInput.value;
+		this.callDelegate('itemUpdated', [this.model]);
 	}
 });

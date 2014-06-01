@@ -24,11 +24,14 @@
 	};
 
 	var DomEvents = {
+		'ondblclick': 'dblclick',
 		'onclick': 'click',
 		'onclickstart': isTouchDevice() ? 'touchstart' : 'mousedown',
 		'onclickend': isTouchDevice() ? 'touchend' : 'mouseup',
 		'onkeydown': 'keydown',
 		'onkeyup': 'keyup',
+		'onfocus': 'focus',
+		'onblur': 'blur',
 		'onmousedown': 'mousedown',
 		'onmouseup': 'mouseup',
 		'ontouchstart': 'touchstart',

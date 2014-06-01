@@ -1,7 +1,8 @@
 <li>
 	<div class="view">
 		<input class="toggle" type="checkbox" outlet="@checkbox" onchange="@onCheckboxChange">
-		<label outlet="@labelEl"></label>
+		<label outlet="@labelEl" ondblclick="@onDoubleClick"></label>
 		<button class="destroy" onclick="@onDestroy"></button>
 	</div>
+	<input class="edit" value="" outlet="@editInput" onblur="@onBlur" onkeyup="@onKeyUp">
 </li>
