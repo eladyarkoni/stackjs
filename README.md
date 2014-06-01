@@ -23,3 +23,7 @@ Download the boilerplate folder from github source code.
 ## Install via bower
 
 bower install stackjs
+
+Enjoy.
+
+Elad Yarkoni.
