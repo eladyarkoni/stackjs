@@ -5,14 +5,14 @@
   "main": "lib/stackjs.js",
   "ignore": [
     "*.*",
-    "app/*",
-    "assets/*",
-    "boilerplate/*",
-    "config/*",
-    "css/*",
-    "device/*",
-    "examples/*",
-    "thirdparties/*",
+    "app/",
+    "assets/",
+    "boilerplate/",
+    "config/",
+    "css/",
+    "device/",
+    "examples/",
+    "thirdparties/",
     "lib/stackjs.api.json"
   ]
 }
