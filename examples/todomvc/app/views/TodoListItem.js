@@ -29,9 +29,11 @@ Class('TodoListItem::STView', {
 		this.callDelegate('itemUpdated', [this.model]);
 	},
 
-	onBlur: function() {
+	onEditInputBlur: function() {
 		this.toggleClass(this.element, 'editing', false);
-		this.updateEditedValue();
+		this.labelEl.innerHTML = this.editInput.value;
+		this.model.label = this.editInput.value;
+		this.callDelegate('itemUpdated', [this.model]);
 	},
 
 	onDoubleClick: function() {
@@ -43,15 +45,9 @@ Class('TodoListItem::STView', {
 		this.callDelegate('itemDeleted', [this.model]);
 	},
 
-	onKeyUp: function(event) {
+	onEditInputKeyUp: function(event) {
 		if (event.keyCode === App.config.enterKeyCode) {
 			this.toggleClass(this.element, 'editing', false);
 		}
-	},
-
-	updateEditedValue: function() {
-		this.labelEl.innerHTML = this.editInput.value;
-		this.model.label = this.editInput.value;
-		this.callDelegate('itemUpdated', [this.model]);
 	}
 });
