@@ -19,3 +19,7 @@ Go to [StackJS Website](http://www.stackjs.org), Create a new project and downlo
 or...
 
 Download the boilerplate folder from github source code.
+
+## Install via bower
+
+bower install stackjs
