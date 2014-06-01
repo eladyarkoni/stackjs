@@ -88,6 +88,15 @@
 	font-weight: bold;
 }
 
+.welcome-view .old-project {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.welcome-view .old-project a {
+	color: #a6e22e;
+}
+
 .welcome-view .contribute div {
 	text-align: center;
 }
