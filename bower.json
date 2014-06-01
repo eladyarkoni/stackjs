@@ -1,0 +1,6 @@
+{
+  "name": "stackjs",
+  "description": "StackJS Application MVC Framework for web and mobile.",
+  "version": "1.0.0",
+  "main": "lib/stackjs.js"
+}

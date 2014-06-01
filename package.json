@@ -1,0 +1,14 @@
+{
+  "name"          : "stackjs",
+  "description"   : "StackJS Application MVC Framework for web and mobile.",
+  "url"           : "http://www.stackjs.org",
+  "keywords"      : ["model", "view", "controller", "router", "server", "client", "browser", "mobile", "phonegap"],
+  "author"        : "Elad Yarkoni <eladyarkoni@gmail.com>",
+  "main"          : "lib/stackjs.js",
+  "version"       : "1.0.0",
+  "license"       : "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eladyarkoni/stackjs.git"
+  }
+}
