@@ -1,8 +1,3 @@
 {
-	"version": "1.0",
-	"facebook": {
-		"appId": "139618566228628",
-		"appSecret": "962ffcd2cfdd2dcfbdffafb3691a1526",
-		"domain": "localhost:8080/web/"
-	}
+	"version": "1.0"
 }
