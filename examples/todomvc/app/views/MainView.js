@@ -1,3 +1,5 @@
+'use strict';
+
 Class('MainView::STView', {
 
 	template: 'main_template',
@@ -141,7 +143,7 @@ Class('MainView::STView', {
 				this.listDetailsView.render();
 				this.listView.render();
 			}));
-			this.inputEl.value = "";
+			this.inputEl.value = '';
 		}
 	}
 });

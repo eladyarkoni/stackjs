@@ -1,3 +1,4 @@
+'use strict';
 /*
  TodoService is interact with the localStorage (aka STUserSettings StackJS Service)
 */

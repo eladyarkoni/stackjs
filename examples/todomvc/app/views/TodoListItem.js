@@ -1,3 +1,5 @@
+'use strict';
+
 Class('TodoListItem::STView', {
 
 	template: 'todolistitem_template',

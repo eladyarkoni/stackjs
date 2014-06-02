@@ -1,3 +1,5 @@
+'use strict';
+
 Class('TodoListDetailsView::STView', {
 
 	template: 'todolistdetails_template',
@@ -10,9 +12,9 @@ Class('TodoListDetailsView::STView', {
 	render: function() {
 		var items = this.callDelegate('getAllItemsCount');
 		var itemCompleted = this.callDelegate('getCompletedItemsCount');
-		this.toggleClass(this.element, 'hide', (items === 0 && this.selected === "all"));
+		this.toggleClass(this.element, 'hide', (items === 0 && this.selected === 'all'));
 		this.itemLeftEl.innerHTML = items - itemCompleted;
-		this.clearCompletedButton.innerHTML = (itemCompleted) ? "Clear completed ("+itemCompleted+")" : "";
+		this.clearCompletedButton.innerHTML = (itemCompleted) ? 'Clear completed ('+itemCompleted+')' : '';
 		
 	},
 
