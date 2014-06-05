@@ -32,6 +32,10 @@ Class('DeviceView::STView', {
 		}
 	},
 
+	reset: function() {
+		this.callSubviews("remove");
+	},
+
 	load: function(files) {
 		var i,
 			view,
