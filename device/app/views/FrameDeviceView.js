@@ -41,7 +41,6 @@ Class('FrameDeviceView::STView', {
 		var i,
 			view,
 			viewClass;
-		this.reset();
 		this.allStyleElement.innerHTML = "";
 		// load views
 		for (i = 0; i < files[0].files.length; i++) {
