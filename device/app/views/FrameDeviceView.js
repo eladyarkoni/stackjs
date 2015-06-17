@@ -1,20 +1,21 @@
-Class('DeviceView::STView', {
+Class('FrameDeviceView::STView', {
 
-	template: 'device',
+	template: 'frame-device',
 
 	styleElement: null,
 	allStyleElement: null,
 	welcomeElement: null,
 
 	DeviceView: function() {
-		window.addEventListener('message', this.context(this.onPlayEvent), false);
+		
 	},
 
 	render: function() {
-		setTimeout(this.ready, 5000);
+		setTimeout(this.context(this.ready), 100);
 	},
 
 	ready: function() {
+		window.addEventListener('message', this.context(this.onPlayEvent), false);
 		window.parent.postMessage({type: 'device:ready'}, '*');
 	},
 

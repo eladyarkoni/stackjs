@@ -18,7 +18,6 @@ body {
 	height: 100%;
 	background-color: #272822;
 	text-align: center;
-	padding-top: 50%;
 	color: #a6e22e;
 }
 
@@ -27,6 +26,9 @@ body {
 	font-weight: normal;
 	transition: all 3s;
 	opacity: 0;
+	padding: 0;
+    margin: 0;
+    padding-top: 100px;
 }
 
 .device .welcome h2 {
@@ -34,6 +36,8 @@ body {
 	font-weight: normal;
 	transition: all 5s;
 	opacity: 0;
+	padding: 0;
+  margin: 0;
 }
 
 .device.in .welcome h1,

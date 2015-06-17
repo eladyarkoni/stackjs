@@ -10,6 +10,12 @@ Class('DeviceView::STView', {
 		window.addEventListener('message', this.onDeviceEvent);
 	},
 
+	render: function() {
+		setTimeout(this.context(function(){
+			this.deviceIframe.src = "device/index.html";
+		}),500);
+	},
+
 	getDevice: function() {
 		return this.deviceIframe.contentWindow;
 	},
@@ -19,7 +25,7 @@ Class('DeviceView::STView', {
 		var data = evt.data.data;
 		switch (messageType) {
 			case 'device:ready':
-				// device is ready
+				console.log("device is ready");
 			break;
 			case 'device:messages':
 				var messages = (data && data.length) ? data : [];
@@ -33,7 +39,6 @@ Class('DeviceView::STView', {
 	},
 
 	play: function(model) {
-		var viewClass = eval(model.data.view);
 		this.getDevice().postMessage({type: 'play', data: model.data}, '*');
 	},
 
